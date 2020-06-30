@@ -29,30 +29,36 @@ function fetchAllCommentsGetRequest(){
 
     var fetchedComments = [];
 
-    var xhttp = new XMLHttpRequest(); // should this be re-instantiated every time a request is made?
+    // var xhttp = new XMLHttpRequest(); // should this be re-instantiated every time a request is made?
 
 
 
     var url = `"http://${address}:${port}/data`;
     console.log(url);
 
-    xhttp.open("GET", url, true);
-    xhttp.setRequestHeader("Content-Type", "application/json");
-    xhttp.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200) {
+    // xhttp.open("GET", url, true);
+    // xhttp.setRequestHeader("Content-Type", "application/json");
+    // xhttp.onreadystatechange = function() {
+    //     if (this.readyState === 4 && this.status === 200) {
+    //
+    //         var parsedData = JSON.parse(this.responseText);
+    //         parsedData.comments.forEach(function(commentObject){
+    //             fetchedComments.push(commentObject);
+    //         });
+    //
+    //         // cacheNewCommentsLocally(fetchedComments);
+    //         // injectCommentsIntoDom();
+    //
+    //
+    //     }
+    // };
+    // xhttp.send();
 
-            var parsedData = JSON.parse(this.responseText);
-            parsedData.comments.forEach(function(commentObject){
-                fetchedComments.push(commentObject);
-            });
-
-            // cacheNewCommentsLocally(fetchedComments);
-            // injectCommentsIntoDom();
-
-
-        }
-    };
-    xhttp.send();
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+        });
 }
 
 // this avoids adding duplicate comments and losing old comments
