@@ -1,7 +1,7 @@
 
 
 var http = require('http');
-
+var fs = require("fs");
 
 
 var comments = [{id: 0, comment: "hello"}, {id: 1, comment: "how do you do?"}];
@@ -36,6 +36,21 @@ var server = http.createServer(function (req, res) {
         res.writeHead(200, headers);
         res.write(JSON.stringify({comments}));
         res.end();
+    }
+
+
+
+
+    if(req.url == "/"){
+        fs.readFile(__dirname + "/index.html", function (err,data) {
+            if (err) {
+                res.writeHead(404);
+                res.end(JSON.stringify(err));
+                return;
+            }
+            res.writeHead(200);
+            res.end(data);
+        });
     }
 });
 
