@@ -1,59 +1,64 @@
+const express = require('express');
+const app = express();
+const port = 3000;
+var path = require('path'); // built-in node module
 
 
-var http = require('http');
-var fs = require("fs");
+bodyParser = require('body-parser');
 
 
-var comments = [{id: 0, comment: "hello"}, {id: 1, comment: "how do you do?"}];
+// use applies middleware
+app.use(bodyParser.urlencoded({
+    extended:true
+}));
 
-var server = http.createServer(function (req, res) {
-    // res.header("Access-Control-Allow-Origin", "*");
+app.use(bodyParser.json());
 
-    const headers = {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
-        'Access-Control-Max-Age': 2592000, // 30 days
-        'Content-Type': 'application/json'
-    };
-    // /** add other headers as per requirement */
-
-
-    if (req.method === 'OPTIONS') {
-        res.writeHead(204, headers);
-        res.end();
-        return;
-    }
-
-    // if (['GET', 'POST'].indexOf(req.method) > -1) {
-    //     res.writeHead(200, headers);
-    //     res.end('Hello World');
-    //     return;
-    // }
-
-
-    console.log("request made");
-    if (req.url == '/data') { //check the URL of the current request
-        res.writeHead(200, headers);
-        res.write(JSON.stringify({comments}));
-        res.end();
-    }
-
-
-
-
-    if(req.url == "/"){
-        fs.readFile(__dirname + "/index.html", function (err,data) {
-            if (err) {
-                res.writeHead(404);
-                res.end(JSON.stringify(err));
-                return;
-            }
-            res.writeHead(200);
-            res.end(data);
-        });
-    }
+// cors middleware: cross origin requests enabled on api
+app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', "*");
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
 });
 
-server.listen(8080);
 
-console.log('Node.js web server at port 8080 is running..');
+let comments = [{id: 0, comment: "hello pal"}, {id: 1, comment: "how are you?"}];
+
+
+// app.get('/', (req, res) => res.send('Hello World!'))
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname + '/index.html'));
+});
+
+
+app.get('/index.js', (req, res) => {
+    res.sendFile(path.join(__dirname + '/index.js'));
+});
+
+
+
+
+
+
+// app.get("/data", function(req, res){
+//     console.log("ROUTE HIT");
+//     res.json({message: "hello"})
+// });
+
+app.get("/data", function(req, res){
+    console.log("ROUTE HIT");
+    res.json({comments});
+});
+
+app.post("/data", function(req, res){
+    console.log("posting comment route hit");
+    var id= comments.reduce((accumComment, nextComment) => {
+        return accumComment > nextComment.id ? accumComment : nextComment.id;
+    }, 0) + 1;
+    comments.push({id, comment: req.body.comment});
+    console.log(comments);
+    res.json({message: "comment posted successfully"});
+});
+
+app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
