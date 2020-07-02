@@ -9,8 +9,11 @@ var inputElementRef = document.getElementById("comment-input");
 var chatContainerRef = document.getElementById("chat-container");
 sendCommentButtonElementRef.addEventListener("click", function(){
     // alert("fsd");
-    if(inputElementRef.value === "" || inputElementRef.value.substring(0,1) === " ")
+    if(inputElementRef.value === "" || inputElementRef.value.substring(0,1) === " ") {
+        alert("messages must contain text and can't start with a space");
         return;
+    }
+
     sendCommentPostRequest(inputElementRef.value);
     inputElementRef.value = "";
 });
