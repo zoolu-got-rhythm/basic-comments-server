@@ -9,6 +9,8 @@ var inputElementRef = document.getElementById("comment-input");
 var chatContainerRef = document.getElementById("chat-container");
 sendCommentButtonElementRef.addEventListener("click", function(){
     // alert("fsd");
+    if(inputElementRef.value === "" || inputElementRef.value.substring(0,1) === " ")
+        return;
     sendCommentPostRequest(inputElementRef.value);
     inputElementRef.value = "";
 });
@@ -17,6 +19,12 @@ sendCommentButtonElementRef.addEventListener("click", function(){
 function addCommentToDOM(comment){
     var commentBoxNode = document.createElement("div");
     commentBoxNode.id = "comment-box";
+
+    var speechBox = document.createElement("div");
+    speechBox.id = "speech-box";
+
+    commentBoxNode.appendChild(speechBox);
+
     var textCommentNode = document.createTextNode(comment);
     commentBoxNode.appendChild(textCommentNode);
     chatContainerRef.appendChild(commentBoxNode);
@@ -27,7 +35,6 @@ function fetchAllCommentsGetRequest(){
     var fetchedComments = [];
 
     var xhttp = new XMLHttpRequest(); // should this be re-instantiated every time a request is made?
-
 
     var url = `data`;
     console.log(url);

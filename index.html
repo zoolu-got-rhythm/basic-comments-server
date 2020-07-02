@@ -5,31 +5,137 @@
     <title>Title</title>
     <style>
         body{
-            background: gainsboro;
+            background: #eee;
             font-family: Arial;
+        }
+
+        input:focus, textarea:focus, select:focus{
+            outline: none;
+        }
+
+        button:focus{
+            outline: none;
+        }
+
+        /* width */
+        /*::-webkit-scrollbar {*/
+            /*width: 5px;*/
+            /*height: 5px;*/
+            /*background: none;*/
+        /*}*/
+
+        /*!* Track *!*/
+        /*::-webkit-scrollbar-track {*/
+            /*background: #f1f1f1;*/
+            /*border-radius: 10px;*/
+            /*background: none;*/
+        /*}*/
+
+        /*!* Handle *!*/
+        /*::-webkit-scrollbar-thumb {*/
+            /*background: #888;*/
+            /*border-radius: 10px;*/
+            /*width:2px;*/
+            /*!*height: 5px;*!*/
+
+        /*}*/
+
+        /*!* Handle on hover *!*/
+        /*::-webkit-scrollbar-thumb:hover {*/
+            /*background: #555;*/
+
+        /*}*/
+
+        #chat-box-container{
+            padding: 5px;
+            /*border: 2px solid deeppink;*/
+            border-radius: 10px;
+            width: fit-content;
+            background: #ccc;
+            border-bottom: 3px solid #999;
         }
 
         #chat-container{
             width: 300px;
+            height: 300px;
+            padding: 5px;
+            padding-right: 15px;
+            padding-left: 10px;
+            overflow-y: scroll;
+
+
         }
 
         #comment-box{
+            position: relative;
             background-color: white;
             padding: 10px;
+            padding-left:14px;
+            padding-right:14px;
             margin-bottom: 5px;
-            border-radius: 15px;
-            border-bottom: 5px solid lightgrey;
-            color: #777;
+            border-radius: 20px;
+            border-bottom: 3px solid #999;
+            color: #444;
+            /*z-index: -1;*/
         }
+
+        #speech-box{
+            background: white;
+            width:10px;
+            height: 10px;
+            position: absolute;
+            left: -2px;
+            top:13px;
+            transform: rotate(45deg);
+            /*z-index: -9;*/
+            /*border-bottom: 3px solid #999;*/
+        }
+
+        #compose-message-container{
+            /* default is flex-d
+            irection: row */
+            display: flex;
+            /*width: 300px;*/
+            background: darkgray;
+            padding: 5px;
+            border-radius: 10px;
+        }
+
+        #comment-input{
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            padding: 5px;
+            border-right: none;
+            /*display:inline-block;*/
+            /*width: auto;*/
+            /*width: */
+            flex:3
+        }
+
+        #submit{
+            background: lawngreen;
+            padding: 5px;
+            flex: 1;
+            border-bottom-right-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
     </style>
 </head>
 
 <body>
-    <h2> chat 💬</h2>
-    <div id="chat-container"> </div>
+    <h2> anonymous chat 💬</h2>
 
-    <input id="comment-input" type="text"  />
-    <button id="submit"> send </button>
+    <div id="chat-box-container">
+        <div id="chat-container"> </div>
+
+        <div id="compose-message-container">
+            <input id="comment-input" type="text"  />
+            <button id="submit"> send </button>
+        </div>
+    </div>
+
+
 
     <script src="index.js"> </script>
 </body>
