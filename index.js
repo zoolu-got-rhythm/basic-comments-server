@@ -9,6 +9,10 @@ var inputElementRef = document.getElementById("comment-input");
 var chatContainerRef = document.getElementById("chat-container");
 sendCommentButtonElementRef.addEventListener("click", function(){
     // alert("fsd");
+    validateAndAttemptSendMessage();
+});
+
+function validateAndAttemptSendMessage(){
     if(inputElementRef.value === "" || inputElementRef.value.substring(0,1) === " ") {
         alert("messages must contain text and can't start with a space");
         return;
@@ -16,7 +20,35 @@ sendCommentButtonElementRef.addEventListener("click", function(){
 
     sendCommentPostRequest(inputElementRef.value);
     inputElementRef.value = "";
-});
+
+}
+
+
+messageInputElementInFocus = false;
+inputElementRef.onfocus = function(){
+    console.log("message input is in focus");
+    messageInputElementInFocus = true;
+};
+
+inputElementRef.onblur = function(){
+    console.log("message input is out of focus");
+    messageInputElementInFocus = false;
+};
+
+
+function sendMessageViaEnterEvent(keyBoardEvent){
+    console.log(keyBoardEvent.charCode);
+    const enterKeyCharCode = 13;
+    if(messageInputElementInFocus && keyBoardEvent.charCode == enterKeyCharCode){
+        validateAndAttemptSendMessage();
+    }
+}
+
+
+
+
+window.addEventListener("keypress", sendMessageViaEnterEvent);
+
 
 
 function addCommentToDOM(comment){
@@ -53,7 +85,6 @@ function fetchAllCommentsGetRequest(){
             });
 
             cacheNewCommentsLocally(fetchedComments);
-            injectCommentsIntoDom();
         }
     };
     console.log("sending");
@@ -79,11 +110,21 @@ function sendCommentPostRequest(comment){
         if (this.readyState === 4 && this.status === 200) {
             var parsedData = JSON.parse(this.responseText);
             console.log(parsedData);
-            fetchAllCommentsGetRequest()
+            fetchAllCommentsGetRequest();
+
+            // window.setTimeout(function(){
+            //     scrollToBottomOfComments();
+            // }, 200)
         }
     };
     console.log("sending");
     xhttp.send(JSON.stringify(params));
+}
+
+function scrollToBottomOfComments(){
+    console.log(chatContainerRef.scrollHeight);
+    chatContainerRef.scrollIntoView(false);
+    chatContainerRef.scrollTop = 10000000;
 }
 
 // this avoids adding duplicate comments and losing old comments
@@ -94,6 +135,7 @@ function cacheNewCommentsLocally(comments){
         comments.forEach(function (commentObjectFromServer) {
             commentsLocal.push(commentObjectFromServer);
         });
+        injectCommentsIntoDom();
         return;
     }
 
@@ -106,8 +148,11 @@ function cacheNewCommentsLocally(comments){
             }
         });
 
-        if(!commentExistsLocally)
-            commentsLocal.push(commentObjectFromServer)
+        if(!commentExistsLocally){
+            commentsLocal.push(commentObjectFromServer);
+            injectCommentsIntoDom();
+            scrollToBottomOfComments();
+        }
     });
 }
 

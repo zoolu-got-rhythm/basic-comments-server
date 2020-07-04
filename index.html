@@ -17,6 +17,59 @@
             outline: none;
         }
 
+        .fade-in {
+            animation: fadeIn ease 1s;
+            -webkit-animation: fadeIn ease 1s;
+            -moz-animation: fadeIn ease 1s;
+            -o-animation: fadeIn ease 1s;
+            -ms-animation: fadeIn ease 1s;
+        }
+        @keyframes fadeIn {
+            0% {
+                opacity:0;
+            }
+            100% {
+                opacity:1;
+            }
+        }
+
+        @-moz-keyframes fadeIn {
+            0% {
+                opacity:0;
+            }
+            100% {
+                opacity:1;
+            }
+        }
+
+        @-webkit-keyframes fadeIn {
+            0% {
+                opacity:0;
+            }
+            100% {
+                opacity:1;
+            }
+        }
+
+        @-o-keyframes fadeIn {
+            0% {
+                opacity:0;
+            }
+            100% {
+                opacity:1;
+            }
+        }
+
+        @-ms-keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+
         /* width */
         /*::-webkit-scrollbar {*/
             /*width: 5px;*/
@@ -58,10 +111,11 @@
         #chat-container{
             width: 300px;
             height: 300px;
-            padding: 5px;
+            /*padding: 5px;*/
+            /*padding-bottom: 0px;*/
             padding-right: 15px;
             padding-left: 10px;
-            overflow-y: scroll;
+            overflow: auto;
 
 
         }
@@ -98,7 +152,7 @@
             irection: row */
             display: flex;
             /*width: 300px;*/
-            background: darkgray;
+            background: #888;
             padding: 5px;
             border-radius: 10px;
         }
@@ -115,11 +169,17 @@
         }
 
         #submit{
-            background: lawngreen;
-            padding: 5px;
-            flex: 1;
-            border-bottom-right-radius: 10px;
-            border-top-right-radius: 10px;
+             background: lawngreen;
+             padding: 5px;
+             flex: 1;
+             border-bottom-right-radius: 10px;
+             border-top-right-radius: 10px;
+             border-bottom: 4px solid green;
+             /*border-right: 5px solid green;*/
+         }
+
+        #submit:active{
+            border-bottom: 3px solid grey;
         }
 
         h2{
@@ -137,7 +197,7 @@
 
         <div id="compose-message-container">
             <input id="comment-input" type="text"  />
-            <button id="submit"> send </button>
+            <button id="submit"> send ⏎ </button>
         </div>
     </div>
 
