@@ -7,7 +7,9 @@ var commentsLocal = []; // id and comment
 var sendCommentButtonElementRef = document.getElementById("submit");
 var inputElementRef = document.getElementById("comment-input");
 var chatContainerRef = document.getElementById("chat-container");
-sendCommentButtonElementRef.addEventListener("click", function(){
+sendCommentButtonElementRef.addEventListener("click", function(e){
+    // e.preventDefault();
+    inputElementRef.focus();
     // alert("fsd");
     validateAndAttemptSendMessage();
 });
