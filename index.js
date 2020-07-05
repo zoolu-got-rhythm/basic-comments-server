@@ -123,7 +123,7 @@ function sendCommentPostRequest(comment){
 
 function scrollToBottomOfComments(){
     console.log(chatContainerRef.scrollHeight);
-    chatContainerRef.scrollIntoView(false);
+    // chatContainerRef.scrollIntoView(false);
     chatContainerRef.scrollTop = 10000000;
 }
 
@@ -136,6 +136,7 @@ function cacheNewCommentsLocally(comments){
             commentsLocal.push(commentObjectFromServer);
         });
         injectCommentsIntoDom();
+        scrollToBottomOfComments();
         return;
     }
 
