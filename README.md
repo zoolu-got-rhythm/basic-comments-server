@@ -5,5 +5,5 @@
 
 ![web client](./web-client-screenshot.png)
 
-## aws connect and pull repo from github using SSH
+## from AWS remote instance/vm: how to connect and pull repo from github using SSH
 https://medium.com/pacroy/connecting-to-github-with-ssh-f54248ccf30d
